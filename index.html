@@ -2,177 +2,198 @@
 <html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Historical Releases</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="src/css/  sections/home.css">
-    <link rel="stylesheet" href="src/css/reset.css">
-    <link rel="stylesheet" href="src/css/global.css">
-    <link rel="stylesheet" href="sections/home.css">
-    <link rel="stylesheet" href="sections/imprensa.css">
-    <link rel="stylesheet" href="sections/sobre.css">
-    <link rel="stylesheet" href="sections/contato.css">
-    <link rel="stylesheet" href="src/css/variables.css">
-    <link rel="stylesheet" href="src/css/  sections/header.css">
-    <link rel="stylesheet" href="src/css/  sections/hero.css">
-    <link rel="stylesheet" href="src/css/  sections/servicos.css">
-    <link rel="stylesheet" href="src/css/  sections/produtos.css">
-    <link rel="stylesheet" href="src/css/  sections/contatos.css">
-    <link rel="stylesheet" href="src/css/  sections/footer.css">
-
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>JOÃO BRANCO | Lançamentos premium com compra segura</title>
+    <meta name="description"
+        content="Catálogo premium de tênis com lançamentos, avaliações reais, pagamento protegido e troca fácil." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-        href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,200;0,300;1,400&family=Roboto:wght@300;400;700&display=swap"
-        rel="stylesheet">
+        href="https://fonts.googleapis.com/css2?family=Raleway:wght@500;700;800&family=Roboto:wght@400;500;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="src/css/reset.css" />
+    <link rel="stylesheet" href="src/css/variables.css" />
+    <link rel="stylesheet" href="src/css/home.css" />
 </head>
-<body>
-    <header class="header">
-        <div class="header-container">
 
-            <a href="#">
-                <h1 class="logo">
-                    JOÃO BRANCO
-                </h1>
-            </a>
-            <nav>
-                <input type="checkbox" id="menu-hamburguer" />
-                <label for="menu-hamburguer">
-                    <div class="menu">
-                        <span class="hamburguer"></span>
-                    </div>
-                </label>
-                <ul>
-                    <li><a href="#home">Home</a></li>
-                    <li><a href="#produtos">Produtos</a></li>
-                    <li><a href="#servicos">serviços</a></li>
-                    <li><a href="#contatos">contatos</a></li>
-                    <li><a href="registro.html">Registro</a></li>
+<body>
+    <header class="site-header" id="topo">
+        <div class="container header-content">
+            <a href="#topo" class="brand">JOÃO BRANCO</a>
+            <nav aria-label="Navegação principal">
+                <ul class="main-nav">
+                    <li><a href="#lancamentos">Lançamentos</a></li>
+                    <li><a href="#confianca">Confiança</a></li>
+                    <li><a href="#avaliacoes">Avaliações</a></li>
+                    <li><a href="#institucional">Institucional</a></li>
+                    <li><a href="registro.html" class="nav-cta">Criar conta</a></li>
                 </ul>
             </nav>
->>>>>>> dev:home.html
         </div>
     </header>
 
-    <section class="hero">
-        <h2>Maiores lançamentos historicos de tenis</h2>
-        <p>Aproveite os melhores descontos</p>
-    </section>
+    <main>
+        <section class="hero">
+            <div class="container hero-content">
+                <p class="hero-kicker">Lançamentos selecionados</p>
+                <h1>Tênis premium com compra rápida e <span>pagamento protegido</span></h1>
+                <p class="hero-subtitle">Catálogo claro, imagens em alta nitidez e experiência mobile-first para você comprar com
+                    confiança.</p>
+                <div class="hero-actions">
+                    <a href="#lancamentos" class="btn btn-primary">Ver lançamentos</a>
+                    <a href="#confianca" class="btn btn-secondary">Por que confiar?</a>
+                </div>
+                <ul class="trust-inline" aria-label="Sinais de segurança">
+                    <li>🔒 Pagamento protegido</li>
+                    <li>↩️ Troca fácil em 30 dias</li>
+                    <li>🚚 Frete com rastreio</li>
+                </ul>
+            </div>
+        </section>
 
-    <section class="produtos" id="produtos">
-        <div class="container">
-            <div class="row">
-                <div class="section-title">
-                    <h2>tenis</h2>
+        <section class="filters" aria-label="Filtros rápidos de catálogo">
+            <div class="container filters-content">
+                <p>Filtrar por:</p>
+                <div class="filter-buttons">
+                    <button type="button" class="filter-btn is-active">Destaques</button>
+                    <button type="button" class="filter-btn">Corrida</button>
+                    <button type="button" class="filter-btn">Casual</button>
+                    <button type="button" class="filter-btn">Treino</button>
                 </div>
             </div>
+        </section>
 
-            <div class="container-produtos">
-                <div class="produto">
-                    <a href="#">
-                        <img src="src/images/img-tenis/adidas.jpg" alt="img-tenis" />
-                        <div class="informacoes-produto">
-                            <p>Da loja direto para seu pé ADIDAS</p>
-                            <p>R$: 0,00</p>
-                        </div>
-                    </a>
+        <section class="products" id="lancamentos">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Lançamentos em destaque</h2>
+                    <p>Cards objetivos: imagem > nome > preço > CTA.</p>
                 </div>
 
-                <div class="produto">
-                    <a href="#">
-                        <img src="src/images/img-tenis/New Balance.jpg" alt="img-tenis" />
-                        <div class="informacoes-produto">
-                            <p>Da loja direto para seu pé NEW BALANCE</p>
-                            <p>R$: 0,00</p>
+                <div class="product-grid">
+                    <article class="product-card">
+                        <span class="badge">Novo</span>
+                        <img src="src/images/img-tenis/adidas.jpg" alt="Tênis Adidas em destaque" />
+                        <div class="product-info">
+                            <h3>Adidas Performance</h3>
+                            <p class="price">R$ 799,90</p>
+                            <p class="microcopy">Pagamento protegido e entrega rastreada.</p>
+                            <a href="saiba+adidas.html" class="btn btn-primary">Ver detalhes</a>
                         </div>
-                    </a>
-                </div>
+                    </article>
 
-                <div class="produto">
-                    <a href="#">
-                        <img src="src/images/img-tenis/a3aefb053aadff4c316368994afd8eb6.jpg" alt="" />
-                        <div class="informacoes-produto">
-                            <p>Da loja direto para seu pé MIZUNO</p>
-                            <p>R$: 0,00</p>
+                    <article class="product-card">
+                        <span class="badge">Mais vendido</span>
+                        <img src="src/images/img-tenis/nike-air-street.jpg"
+                            alt="Tênis Nike em destaque" />
+                        <div class="product-info">
+                            <h3>Nike Air Street</h3>
+                            <p class="price">R$ 899,90</p>
+                            <p class="microcopy">Troca fácil e suporte rápido por e-mail.</p>
+                            <a href="saiba+nike.html" class="btn btn-primary">Ver detalhes</a>
                         </div>
-                    </a>
-                </div>
+                    </article>
 
-                <div class="produto">
-                    <a href="#">
-                        <img src="src/images/img-tenis/WhatsApp Image 2024-11-23 at 03.18.50(1).jpeg" alt="vages" />
-                        <div class="informacoes-produto">
-                            <p>Da loja direto para seu pé NIKE</p>
-                            <p>R$: 0,00</p>
+                    <article class="product-card">
+                        <span class="badge">Conforto</span>
+                        <img src="src/images/img-tenis/New Balance.jpg" alt="Tênis New Balance em destaque" />
+                        <div class="product-info">
+                            <h3>New Balance Runner</h3>
+                            <p class="price">R$ 749,90</p>
+                            <p class="microcopy">Compra simples em poucos toques.</p>
+                            <a href="saiba+newbalance.html" class="btn btn-primary">Ver detalhes</a>
                         </div>
-                    </a>
+                    </article>
+
+                    <article class="product-card">
+                        <span class="badge">Alta performance</span>
+                        <img src="src/images/img-tenis/mizuno-wave-pro.jpg" alt="Tênis Mizuno em destaque" />
+                        <div class="product-info">
+                            <h3>Mizuno Wave Pro</h3>
+                            <p class="price">R$ 829,90</p>
+                            <p class="microcopy">Garantia de originalidade e procedência.</p>
+                            <a href="saiba+mizuno.html" class="btn btn-primary">Ver detalhes</a>
+                        </div>
+                    </article>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section>
-        <div class="container">
-            <div class="row">
-                <div class="section-title">
-                    <h2>serviços</h2>
+        <section class="trust" id="confianca">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Compre com confiança</h2>
+                </div>
+                <div class="trust-grid">
+                    <article>
+                        <h3>Pagamento seguro</h3>
+                        <p>Processamento protegido e confirmação imediata.</p>
+                    </article>
+                    <article>
+                        <h3>Troca facilitada</h3>
+                        <p>Troca em até 30 dias para você comprar sem receio.</p>
+                    </article>
+                    <article>
+                        <h3>Atendimento rápido</h3>
+                        <p>Suporte por e-mail com retorno em horário comercial.</p>
+                    </article>
+                    <article>
+                        <h3>Envio com rastreio</h3>
+                        <p>Acompanhe seu pedido do despacho até a entrega.</p>
+                    </article>
                 </div>
             </div>
-    </section>
+        </section>
 
-    <section class="servicos" id="servicos">
-        <div class="item">
-            <h3>ADIDAS</h3>
-            <img src="src/images/img-tenis/adidas.jpg" alt="Tenis ADIDAS">
-            <p>Fundada em 1949 por Adolf Dassler, a Adidas é uma das marcas mais icônicas do mundo dos esportes e da moda.
-                 Reconhecida pelo seu logotipo de três listras, a empresa se destaca por unir tecnologia de ponta,
-                  desempenho atlético e design moderno em seus produtos...</p>
-            <a href="saiba+adidas.html" class="btn-know-more">Saiba mais</a>
-        </div>
-        <div class="item">
-            <h3>NIKE</h3>
-            <img src="src/images/img-tenis/WhatsApp Image 2024-11-23 at 03.18.50(1).jpeg" alt="Tenis NIKE">
-            <p>A Nike, fundada em 1964 por Bill Bowerman e Phil Knight, é sinônimo de inovação, desempenho e estilo.
-                 Com seu icônico logotipo "swoosh" e o slogan "Just Do It", a marca se consolidou como líder no universo
-                  dos esportes e da moda. Seus tênis são projetados para atender a uma vasta gama de esportes...</p>
-            <a href="saiba+nike.html" class="btn-know-more">Saiba mais</a>
-        </div>
-        <div class="item">
-            <h3>NEW BALANCE</h3>
-            <img src="src/images/img-tenis/New Balance.jpg" alt="NEW BALANCE">
-            <p>A New Balance, fundada em 1906, é uma das principais marcas no segmento de tênis esportivos, especialmente no mundo 
-                da corrida. A marca é reconhecida pela qualidade de seus produtos, que combinam conforto, estabilidade e tecnologia
-                 de ponta para oferecer um desempenho excepcional...</p>
-            <a href="saiba+newbalance.html" class="btn-know-more">Saiba mais</a>
-        </div>
-        <div class="item">
-            <h3>MIZUNO</h3>
-            <img src="src/images/img-tenis/a3aefb053aadff4c316368994afd8eb6.jpg" alt="MIZUNO">
-            <p>A Mizuno, fundada no Japão em 1906, é uma marca conhecida por sua precisão na engenharia de tênis de alta performance. 
-                A empresa é famosa por criar produtos que combinam tecnologia avançada com uma grande tradição esportiva. 
-                Com foco em conforto e durabilidade, os tênis Mizuno são projetados para atletas que exigem o máximo desempenho de seus calçados...</p>
-            <a href="saiba+mizuno.html" class="btn-know-more">Saiba mais</a>
-        </div>
-    </section>
+        <section class="reviews" id="avaliacoes">
+            <div class="container">
+                <div class="section-head">
+                    <h2>Prova social</h2>
+                    <p>Avaliações que reforçam credibilidade e clareza.</p>
+                </div>
+                <div class="review-grid">
+                    <blockquote class="review-card">
+                        <p>“Layout claro e compra sem confusão. Recebi dentro do prazo.”</p>
+                        <cite>★★★★★ — Cliente verificado</cite>
+                    </blockquote>
+                    <blockquote class="review-card">
+                        <p>“As fotos são nítidas e o preço ficou bem visível no celular.”</p>
+                        <cite>★★★★★ — Cliente verificado</cite>
+                    </blockquote>
+                    <blockquote class="review-card">
+                        <p>“Gostei dos selos de segurança e do processo de troca fácil.”</p>
+                        <cite>★★★★☆ — Cliente verificado</cite>
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+    </main>
 
-    <footer class="footer" id="contatos">
-        <h4>JOÃO BRANCO</h4>
-        <h3>Redes Sociais</h3>
-        <div class="social">
-            <a href="https://www.facebook.com/">
-                <img src="src/images/img-logos/Facebook.jpg" alt="Logo do Facebook">
-            </a>
-            <a href="https://www.instagram.com/joaovitorbrancoo/">
-                <img src="src/images/img-logos/instagram.png" alt="Logo do Instagram">
-            </a>
-            <a href="mailto:jvitor5343@gmail.com">
-                <img src="src/images/img-logos/gmail.png" alt="Logo do Twitter" class="gmail-logo">
-            </a>
+    <footer class="site-footer" id="institucional">
+        <div class="container footer-grid">
+            <div>
+                <h2>JOÃO BRANCO</h2>
+                <p>Catálogo premium de lançamentos com foco em confiança e experiência rápida.</p>
+            </div>
+            <div>
+                <h3>Institucional</h3>
+                <ul>
+                    <li><a href="#confianca">Política de trocas</a></li>
+                    <li><a href="#confianca">Privacidade e segurança</a></li>
+                    <li><a href="registro.html">Cadastro</a></li>
+                </ul>
+            </div>
+            <div>
+                <h3>Contato</h3>
+                <ul>
+                    <li><a href="mailto:jvitor5343@gmail.com">jvitor5343@gmail.com</a></li>
+                    <li><a href="https://www.instagram.com/joaovitorbrancoo/" target="_blank" rel="noopener noreferrer">Instagram</a></li>
+                    <li><a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer">Facebook</a></li>
+                </ul>
+            </div>
         </div>
     </footer>
-    
-    
 </body>
 
 </html>
