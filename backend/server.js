@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+const rateLimit = require('express-rate-limit');
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -8,6 +9,11 @@ const jwt = require('jsonwebtoken');
 const app = express();
 const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
+
+if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
+  console.error('❌ JWT_SECRET must be set in production. Refusing to start.');
+  process.exit(1);
+}
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
 
 // ── Middlewares ───────────────────────────────────────────────────────────────
@@ -19,6 +25,32 @@ app.use(
       : ['http://localhost:5500', 'http://127.0.0.1:5500'],
   })
 );
+
+// Rate limiting for auth routes (prevent brute force)
+const authLimiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 20,
+  message: { error: 'Muitas tentativas. Tente novamente em 15 minutos.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// Rate limiting for authenticated API routes
+const apiLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 60,
+  message: { error: 'Limite de requisições atingido. Tente novamente em 1 minuto.' },
+  standardHeaders: true,
+  legacyHeaders: false,
+});
+
+// ── Custom error for domain errors ───────────────────────────────────────────
+class AppError extends Error {
+  constructor(message, statusCode) {
+    super(message);
+    this.statusCode = statusCode;
+  }
+}
 
 // ── Helpers ───────────────────────────────────────────────────────────────────
 function auth(req, res, next) {
@@ -123,7 +155,7 @@ app.get('/api/products/:slug', async (req, res) => {
 });
 
 // ── Rotas: Autenticação ───────────────────────────────────────────────────────
-app.post('/api/auth/register', async (req, res) => {
+app.post('/api/auth/register', authLimiter, async (req, res) => {
   try {
     const { name, email, password } = req.body;
     if (!name || !email || !password)
@@ -148,7 +180,7 @@ app.post('/api/auth/register', async (req, res) => {
   }
 });
 
-app.post('/api/auth/login', async (req, res) => {
+app.post('/api/auth/login', authLimiter, async (req, res) => {
   try {
     const { email, password } = req.body;
     if (!email || !password) return res.status(400).json({ error: 'E-mail e senha são obrigatórios' });
@@ -173,7 +205,7 @@ app.post('/api/auth/login', async (req, res) => {
 });
 
 // ── Rotas: Usuário (autenticado) ──────────────────────────────────────────────
-app.get('/api/users/me', auth, async (req, res) => {
+app.get('/api/users/me', apiLimiter, auth, async (req, res) => {
   try {
     const user = await prisma.user.findUnique({
       where: { id: req.user.id },
@@ -186,51 +218,75 @@ app.get('/api/users/me', auth, async (req, res) => {
 });
 
 // ── Rotas: Pedidos ────────────────────────────────────────────────────────────
-app.post('/api/orders', auth, async (req, res) => {
+app.post('/api/orders', authLimiter, auth, async (req, res) => {
   try {
     const { addressId, items } = req.body;
     if (!items || items.length === 0) return res.status(400).json({ error: 'Itens do pedido são obrigatórios' });
+
+    // Batch-fetch all products and sizes in two queries (avoids N+1)
+    const productIds = items.map((i) => i.productId);
+    const sizeIds = items.map((i) => i.sizeId);
+
+    const [products, sizes] = await Promise.all([
+      prisma.product.findMany({ where: { id: { in: productIds } } }),
+      prisma.productSize.findMany({ where: { id: { in: sizeIds } } }),
+    ]);
+
+    const productMap = Object.fromEntries(products.map((p) => [p.id, p]));
+    const sizeMap = Object.fromEntries(sizes.map((s) => [s.id, s]));
 
     let total = 0;
     const itemsData = [];
 
     for (const item of items) {
-      const product = await prisma.product.findUnique({ where: { id: item.productId } });
+      const product = productMap[item.productId];
       if (!product) return res.status(404).json({ error: `Produto ${item.productId} não encontrado` });
 
-      const size = await prisma.productSize.findUnique({ where: { id: item.sizeId } });
+      const size = sizeMap[item.sizeId];
       if (!size || size.stockQuantity < item.quantity)
-        return res.status(400).json({ error: `Estoque insuficiente para o tamanho solicitado` });
+        return res.status(400).json({ error: 'Estoque insuficiente para o tamanho solicitado' });
 
       total += product.price * item.quantity;
       itemsData.push({ productId: product.id, sizeId: size.id, quantity: item.quantity, unitPrice: product.price });
     }
 
-    const order = await prisma.order.create({
-      data: {
-        userId: req.user.id,
-        addressId: addressId || null,
-        total,
-        items: { create: itemsData },
-      },
-      include: { items: { include: { product: true, size: true } } },
-    });
+    // Wrap order creation and stock decrement in a transaction to prevent race conditions
+    const order = await prisma.$transaction(async (tx) => {
+      // Re-check stock inside the transaction to prevent race conditions
+      for (const item of itemsData) {
+        const size = await tx.productSize.findUnique({ where: { id: item.sizeId } });
+        if (!size || size.stockQuantity < item.quantity)
+          throw new AppError('Estoque insuficiente para o tamanho solicitado', 400);
+      }
 
-    // Decrementa estoque
-    for (const item of itemsData) {
-      await prisma.productSize.update({
-        where: { id: item.sizeId },
-        data: { stockQuantity: { decrement: item.quantity } },
+      const createdOrder = await tx.order.create({
+        data: {
+          userId: req.user.id,
+          addressId: addressId || null,
+          total,
+          items: { create: itemsData },
+        },
+        include: { items: { include: { product: true, size: true } } },
       });
-    }
+
+      for (const item of itemsData) {
+        await tx.productSize.update({
+          where: { id: item.sizeId },
+          data: { stockQuantity: { decrement: item.quantity } },
+        });
+      }
+
+      return createdOrder;
+    });
 
     res.status(201).json(order);
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    const status = e instanceof AppError ? e.statusCode : 500;
+    res.status(status).json({ error: e.message });
   }
 });
 
-app.get('/api/orders', auth, async (req, res) => {
+app.get('/api/orders', apiLimiter, auth, async (req, res) => {
   try {
     const orders = await prisma.order.findMany({
       where: { userId: req.user.id },

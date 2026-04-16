@@ -101,7 +101,7 @@ async function main() {
         slug,
         ...data,
         sizes: {
-          create: sizeList.map((s) => ({ sizeLabel: s, stockQuantity: Math.floor(Math.random() * 20) + 1 })),
+          create: sizeList.map((size) => ({ sizeLabel: size, stockQuantity: Math.floor(Math.random() * 20) + 1 })),
         },
       },
     });
