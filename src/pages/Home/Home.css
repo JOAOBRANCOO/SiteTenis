@@ -1,0 +1,178 @@
+.hero {
+  height: 89vh;
+  background: url('/src/images/img-tenis/WhatsApp Image 2024-11-23 at 02.50.01.jpeg') no-repeat center center;
+  background-size: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative;
+}
+
+.hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+  color: #fff;
+}
+
+.hero-content h2 {
+  font-size: 4rem;
+  font-family: var(--fonte-titulo);
+  font-weight: 300;
+  margin-bottom: 16px;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.5);
+}
+
+.hero-content p {
+  font-size: 2rem;
+  margin-bottom: 32px;
+  color: rgba(255,255,255,0.9);
+}
+
+.hero-btn {
+  display: inline-block;
+  padding: 14px 40px;
+  background-color: var(--cor-2);
+  color: var(--cor-3);
+  font-size: 1.6rem;
+  font-weight: 700;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.hero-btn:hover {
+  background-color: #333;
+}
+
+.home-section {
+  padding: 60px 0;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section-title {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section-title h2 {
+  font-size: 3.2rem;
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  position: relative;
+  display: inline-block;
+}
+
+.section-title h2::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--cor-2);
+}
+
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.section-cta {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.btn-outline {
+  display: inline-block;
+  padding: 12px 32px;
+  border: 2px solid var(--cor-2);
+  color: var(--cor-2);
+  font-size: 1.5rem;
+  font-weight: 700;
+  border-radius: 4px;
+  transition: all 0.3s;
+  text-decoration: none;
+}
+
+.btn-outline:hover {
+  background-color: var(--cor-2);
+  color: var(--cor-3);
+}
+
+.brands-section {
+  background-color: #f5f5f5;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 30px;
+}
+
+.brand-item {
+  background: #fff;
+  border-radius: 8px;
+  padding: 24px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.brand-item h3 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 16px;
+  font-family: var(--fonte-titulo);
+}
+
+.brand-item img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 16px;
+}
+
+.brand-item p {
+  font-size: 1.4rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.btn-know-more {
+  display: inline-block;
+  padding: 10px 24px;
+  background-color: var(--cor-2);
+  color: var(--cor-3);
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+.btn-know-more:hover {
+  background-color: #333;
+}
+
+@media (max-width: 768px) {
+  .hero-content h2 {
+    font-size: 2.8rem;
+  }
+}

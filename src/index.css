@@ -1,0 +1,54 @@
+:root {
+  --cor-1: #ffffff;
+  --cor-2: #000000;
+  --cor-3: #fff;
+  --cor-4: rgb(131, 131, 130);
+  --cor-5: #000;
+  --fonte-titulo: 'Raleway', sans-serif;
+  --fonte-titulo-2: 'Roboto', sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+  font-weight: 400;
+  font-family: var(--fonte-titulo-2);
+  background-color: var(--cor-1);
+  color: var(--cor-5);
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+button {
+  cursor: pointer;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+.loading-spinner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+  font-size: 1.8rem;
+  color: var(--cor-4);
+}
