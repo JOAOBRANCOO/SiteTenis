@@ -85,7 +85,7 @@ body {
 .hero {
     background:
         linear-gradient(135deg, rgba(11, 16, 32, 0.88), rgba(17, 24, 45, 0.84)),
-        url('../images/img-tenis/WhatsApp Image 2024-11-23 at 02.50.01.jpeg') center/cover no-repeat;
+        url('../images/img-tenis/hero-premium.jpg') center/cover no-repeat;
 }
 
 .hero-content {
