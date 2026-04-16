@@ -354,7 +354,7 @@ O frontend é 100% estático e pode ser publicado em qualquer CDN:
 
 ---
 
-## 🔧 Troubleshooting
+## 🔧 Resolução de Problemas
 
 ### `Cannot find module '@prisma/client'`
 Execute `npm install` e em seguida `npm run db:generate` dentro de `/backend`.

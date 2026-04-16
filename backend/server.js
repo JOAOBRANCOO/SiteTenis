@@ -11,7 +11,7 @@ const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
 if (process.env.NODE_ENV === 'production' && !process.env.JWT_SECRET) {
-  console.error('❌ JWT_SECRET must be set in production. Refusing to start.');
+  console.error('❌ JWT_SECRET precisa ser definido em produção. Encerrando.');
   process.exit(1);
 }
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
@@ -26,25 +26,25 @@ app.use(
   })
 );
 
-// Rate limiting for auth routes (prevent brute force)
+// Limite de requisições para rotas de autenticação (proteção contra força bruta)
 const authLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutes
+  windowMs: 15 * 60 * 1000, // 15 minutos
   max: 20,
   message: { error: 'Muitas tentativas. Tente novamente em 15 minutos.' },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// Rate limiting for authenticated API routes
+// Limite de requisições para rotas autenticadas da API
 const apiLimiter = rateLimit({
-  windowMs: 60 * 1000, // 1 minute
+  windowMs: 60 * 1000, // 1 minuto
   max: 60,
   message: { error: 'Limite de requisições atingido. Tente novamente em 1 minuto.' },
   standardHeaders: true,
   legacyHeaders: false,
 });
 
-// ── Custom error for domain errors ───────────────────────────────────────────
+// ── Classe de erro de domínio ─────────────────────────────────────────────────
 class AppError extends Error {
   constructor(message, statusCode) {
     super(message);
@@ -223,7 +223,7 @@ app.post('/api/orders', authLimiter, auth, async (req, res) => {
     const { addressId, items } = req.body;
     if (!items || items.length === 0) return res.status(400).json({ error: 'Itens do pedido são obrigatórios' });
 
-    // Batch-fetch all products and sizes in two queries (avoids N+1)
+    // Busca em lote todos os produtos e tamanhos em duas queries (evita N+1)
     const productIds = items.map((i) => i.productId);
     const sizeIds = items.map((i) => i.sizeId);
 
@@ -250,9 +250,9 @@ app.post('/api/orders', authLimiter, auth, async (req, res) => {
       itemsData.push({ productId: product.id, sizeId: size.id, quantity: item.quantity, unitPrice: product.price });
     }
 
-    // Wrap order creation and stock decrement in a transaction to prevent race conditions
+    // Envolve a criação do pedido e o decremento de estoque em uma transação (evita condições de corrida)
     const order = await prisma.$transaction(async (tx) => {
-      // Re-check stock inside the transaction to prevent race conditions
+      // Reverifica o estoque dentro da transação para evitar condições de corrida
       for (const item of itemsData) {
         const size = await tx.productSize.findUnique({ where: { id: item.sizeId } });
         if (!size || size.stockQuantity < item.quantity)
